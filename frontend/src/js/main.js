@@ -2,6 +2,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
 import Todos from './components/Todos';
+import Owners from './components/Owners';
 
 export default () => {
     // document.querySelector('.app').innerText = "Hello"
@@ -9,6 +10,7 @@ export default () => {
     footer();
     navHome();
     navTodos();
+    navOwners();
 }
 
 const appDiv = document.querySelector('.app');
@@ -40,6 +42,19 @@ function navTodos(){
                 todosInspire();
             })
             .catch(err => console.log(err))
+    })
+}
+
+function navOwners(){
+    const ownersButton = document.querySelector('.nav__owners');
+    ownersButton.addEventListener('click', function(){
+        // fetch Owners from back end
+        fetch("https://localhost:44393/api/owner")
+        .then(response => response.json())
+        .then(owners => {
+            appDiv.innerHTML = Owners(owners);
+        })
+        .catch(error => console.log(error))
     })
 }
 
