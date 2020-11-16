@@ -3,6 +3,7 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import Todos from './components/Todos';
 import Owners from './components/Owners';
+import Owner from './components/Owner';
 
 export default () => {
     // document.querySelector('.app').innerText = "Hello"
@@ -53,8 +54,25 @@ function navOwners(){
         .then(response => response.json())
         .then(owners => {
             appDiv.innerHTML = Owners(owners);
+            ownerNameButton();
         })
         .catch(error => console.log(error))
+    })
+}
+
+function ownerNameButton(){
+    const ownerNameElements = document.querySelectorAll('.owner__name');
+    ownerNameElements.forEach(element => {
+        element.addEventListener('click', function(){
+            const ownerId = element.id;
+            console.log(`clicked owner id: ${ownerId}`);
+            fetch(`https://localhost:44393/api/owner/${ownerId}`)
+            .then(response => response.json())
+            .then(owner => {
+                appDiv.innerHTML = Owner(owner);
+            })
+            .catch(err => console.log(err))
+        })
     })
 }
 

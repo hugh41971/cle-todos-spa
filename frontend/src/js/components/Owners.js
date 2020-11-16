@@ -5,7 +5,7 @@ export default function Owners(owners){
         ${owners.map(owner => {
             return `
             <li>
-                <h4>${owner.name}</h4>
+                <h4 class="owner__name" id="${owner.id}">${owner.name}</h4>
             </li>
             `
         }).join('')}
