@@ -4,7 +4,12 @@ export default function Owner(owner){
     <ol>
         ${owner.todos.map(todo =>{
             return `
-            <li>${todo.name}</li>
+            <li>
+                <h4>${todo.name}</h4>
+                <button class="owner__delete-todo">Delete</button>
+                <input class="owner__todo-id" type="hidden" value="${todo.id}">
+            </li>
+
             `
         }).join("")}
     </ol>

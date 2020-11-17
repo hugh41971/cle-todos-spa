@@ -71,6 +71,7 @@ function ownerNameButton(){
             .then(owner => {
                 appDiv.innerHTML = Owner(owner);
                 ownerAddTodo();
+                ownerDeleteTodo();
             })
             .catch(err => console.log(err))
         })
@@ -101,6 +102,28 @@ function ownerAddTodo(){
             appDiv.innerHTML = Todos(todos)
         })
         .catch(err => console.log(err))
+    })
+}
+
+function ownerDeleteTodo(){
+    const ownerDeleteTodoButtons = document.querySelectorAll('.owner__delete-todo');
+    ownerDeleteTodoButtons.forEach(button => {
+        button.addEventListener('click', function(){
+            const todoId = event.target.parentElement.querySelector('.owner__todo-id').value;
+            console.log(todoId);
+            fetch(`https://localhost:44393/api/todo/${todoId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(todos => {
+                appDiv.innerHTML = Todos(todos)
+            })
+            .catch(err => console.log(err))
+        })
+
     })
 }
 
