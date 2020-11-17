@@ -8,5 +8,10 @@ export default function Owner(owner){
             `
         }).join("")}
     </ol>
+
+    <section class="owner__add-todo">
+        <input class="owner__add-todo__name" type="text" placeholder="Add a new to do here"></input>
+        <button class="owner__add-todo__submit" id="${owner.id}">Add a Todo for ${owner.name}</button>
+    </section>
     `
 }

@@ -70,9 +70,37 @@ function ownerNameButton(){
             .then(response => response.json())
             .then(owner => {
                 appDiv.innerHTML = Owner(owner);
+                ownerAddTodo();
             })
             .catch(err => console.log(err))
         })
+    })
+}
+
+function ownerAddTodo(){
+    const ownerAddTodoButton = document.querySelector('.owner__add-todo__submit');
+    ownerAddTodoButton.addEventListener('click', function(){
+        const ownerId = ownerAddTodoButton.id;
+        const todoName = event.target.parentElement.querySelector('.owner__add-todo__name').value;
+        console.log(`owner id: ${ownerId}, todo name: ${todoName}`)
+
+        const requestBody = {
+            Name: todoName,
+            OwnerId: ownerId
+        }
+
+        fetch(`https://localhost:44393/api/todo`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(response => response.json())
+        .then(todos => {
+            appDiv.innerHTML = Todos(todos)
+        })
+        .catch(err => console.log(err))
     })
 }
 
