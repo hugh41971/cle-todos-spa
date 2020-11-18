@@ -2,6 +2,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
 import Todos from './components/Todos';
+import TodoEdit from './components/TodoEdit';
 import Owners from './components/Owners';
 import Owner from './components/Owner';
 
@@ -71,6 +72,7 @@ function ownerNameButton(){
             .then(owner => {
                 appDiv.innerHTML = Owner(owner);
                 ownerAddTodo();
+                ownerEditTodo()
                 ownerDeleteTodo();
             })
             .catch(err => console.log(err))
@@ -124,6 +126,53 @@ function ownerDeleteTodo(){
             .catch(err => console.log(err))
         })
 
+    })
+}
+
+function ownerEditTodo(){
+    const ownerEditTodoButtons = document.querySelectorAll('.owner__edit-todo');
+    ownerEditTodoButtons.forEach(button => {
+        button.addEventListener('click', function(){
+            const todoId = event.target.parentElement.querySelector('.owner__todo-id').value;
+            console.log(todoId);
+            fetch(`https://localhost:44393/api/todo/${todoId}`)
+            .then(response => response.json())
+            .then(todo => {
+                appDiv.innerHTML = TodoEdit(todo);
+                editTodoSubmit();
+            })
+            .catch(err => console.log(err))
+        })
+    })
+}
+
+function editTodoSubmit(){
+    const editTodoSubmitButton = document.querySelector('.edit-todo__submit');
+    editTodoSubmitButton.addEventListener('click', function(){
+        const todoId = editTodoSubmitButton.parentElement.querySelector('.edit-todo__id').value;
+        const todoName = editTodoSubmitButton.parentElement.querySelector('.edit-todo__name').value;
+        const todoOwnerId = editTodoSubmitButton.parentElement.querySelector('.edit-todo__owner-id').value;
+
+        const todoData = {
+            id: todoId,
+            name: todoName,
+            ownerId: todoOwnerId
+        }
+
+        console.log(todoData);
+
+        fetch(`https://localhost:44393/api/todo/${todoId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(todoData)
+        })
+        .then(response => response.json())
+        .then(todos => {
+            appDiv.innerHTML = Todos(todos)
+        })
+        .catch(err => console.log(err))
     })
 }
 

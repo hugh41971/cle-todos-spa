@@ -6,6 +6,7 @@ export default function Owner(owner){
             return `
             <li>
                 <h4>${todo.name}</h4>
+                <button class="owner__edit-todo">Edit</button>
                 <button class="owner__delete-todo">Delete</button>
                 <input class="owner__todo-id" type="hidden" value="${todo.id}">
             </li>
